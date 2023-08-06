@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, useState } from 'react'
+
+import routes from './router'
+import { useRoutes } from 'react-router-dom'
+import AppMenu from './components/app-menu'
+import useAuth from './hooks/useAuth'
+import Loading from './components/loading'
+import BreadCrumb, { CollapseContext } from './components/bread-crumb'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
+import { BACK_COLLAPSE } from './enums'
 
 function App() {
+  const { isBack } = useAuth()
+  const [collapse, setCollapse] = useLocalStorage(BACK_COLLAPSE)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <CollapseContext.Provider value={{ collapse, setCollapse }}>
+      <div className={`flex h-[100vh] overflow-hidden `}>
+        {isBack && <AppMenu />}
+
+        <div className="flex-1 relative overflow-y-auto ">
+          {isBack && <BreadCrumb />}
+          <Suspense fallback={<Loading />}>
+            <div >{useRoutes(routes)}</div>
+          </Suspense>
+        </div>
+      </div>
+    </CollapseContext.Provider>
+  )
 }
 
-export default App;
+export default App
