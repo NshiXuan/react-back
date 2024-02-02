@@ -2,7 +2,7 @@ import React, { lazy } from 'react'
 import { Navigate, RouteObject } from 'react-router-dom'
 
 const Login = lazy(() => import('@/pages/login'))
-const UserList = lazy(() => import('@/pages/user/user-list'))
+const User = lazy(() => import('@/pages/user'))
 const Home = lazy(() => import('@/pages/home'))
 const Role = lazy(() => import('@/pages/role'))
 const NoFound = lazy(() => import('@/pages/no-found'))
@@ -30,7 +30,7 @@ const routes: RouteObject[] = [
       },
       {
         path: 'list',
-        element: <UserList />
+        element: <User />
       },
       // {
       //   path: 'list/:id',

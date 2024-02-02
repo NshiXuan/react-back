@@ -35,11 +35,12 @@ export interface IFormItem {
   allowClear?: boolean
   rows?: number // textarea的行数
   size?: SizeType // 输入框尺寸
+  disabled?: boolean // 是否禁用
 }
 
 export interface IProps {
   children?: ReactNode // submit类型的按钮
-  data: IFormItem[] // 映射表单列表的信息
+  data?: IFormItem[] // 映射表单列表的信息
   form: FormInstance<any> // 表单
   initialValues?: any // 默认值
   onFinish?: (values: any) => void // 提交的回调函数
@@ -69,8 +70,8 @@ const BaseForm: FC<IProps> = memo(function (props) {
   useEffect(() => {
     initialValues
       ? form.setFieldsValue({
-          ...initialValues
-        })
+        ...initialValues
+      })
       : form.resetFields()
   }, [initialValues])
 
@@ -82,6 +83,7 @@ const BaseForm: FC<IProps> = memo(function (props) {
           hidden={item.hidden}
           placeholder={item.placeholder}
           allowClear={item.allowClear}
+          disabled={item.disabled}
           size={item.size}
         />
       )
@@ -91,6 +93,7 @@ const BaseForm: FC<IProps> = memo(function (props) {
           placeholder={item.placeholder}
           allowClear={item.allowClear}
           size={item.size}
+          disabled={item.disabled}
         />
       )
     } else if (item.type === 'select') {
@@ -100,6 +103,7 @@ const BaseForm: FC<IProps> = memo(function (props) {
           style={{ width: 120 }}
           allowClear={item.allowClear}
           options={item.options}
+          disabled={item.disabled}
         />
       )
     } else if (item.type === 'radio') {
@@ -119,6 +123,7 @@ const BaseForm: FC<IProps> = memo(function (props) {
         <TextArea
           placeholder={item.placeholder}
           allowClear={item.allowClear}
+          disabled={item.disabled}
           rows={item.rows ? item.rows : 4}
         />
       )
@@ -152,9 +157,8 @@ const BaseForm: FC<IProps> = memo(function (props) {
 
       {children && (
         <Form.Item
-          className={`flex ${
-            buttonLayout == 'left' ? buttonLayout : 'justify-center'
-          }`}
+          className={`flex ${buttonLayout == 'left' ? buttonLayout : 'justify-center'
+            }`}
         >
           {children}
         </Form.Item>

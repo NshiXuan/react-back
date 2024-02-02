@@ -9,13 +9,27 @@ import { TestUserList } from '@/data/user-data'
 import useTable from '@/hooks/useTable'
 import { IUser } from '@/type'
 import { TestRoleList } from '@/data/role-data'
-import BaseModalForm from '@/components/base-modal-form'
-import useBaseModalForm from '@/hooks/useBaseModalForm'
 import { TestForm } from '@/components/base-form/test-form'
+import BaseModal from '@/components/base-modal'
+import useBaseModal from '@/hooks/useBaseModal'
+import BaseForm from '@/components/base-form'
+import useBaseForm from '@/hooks/useBaseForm'
 
 const UserList = function () {
   const { rowSelection, pagination, loading, handleTableChange } = useTable()
-  const { isModalOpen, showModal, handleCancel, form } = useBaseModalForm()
+  const { isOpen, handleOpen, handleCancel, } = useBaseModal()
+  const { form } = useBaseForm()
+
+  function handleOk() {
+    form
+      .validateFields()
+      .then((values) => {
+        form.resetFields()
+      })
+      .catch((info) => {
+        console.log('Validate Failed:', info)
+      })
+  }
 
   // 映射表格的每一列
   const columns: ColumnsType<IUser> = [
@@ -60,7 +74,7 @@ const UserList = function () {
       render: (item: IUser) => {
         return (
           <div className="flex gap-3 ">
-            <Button type="primary" icon={<FormOutlined />} onClick={showModal}>
+            <Button type="primary" icon={<FormOutlined />} onClick={handleOpen}>
               编辑
             </Button>
             <Button type="primary" icon={<DeleteOutlined />} danger>
@@ -86,14 +100,9 @@ const UserList = function () {
       />
 
       {/* 表单模态框 */}
-      <BaseModalForm
-        title="编辑"
-        isModalOpen={isModalOpen}
-        handleCancel={handleCancel}
-        data={TestForm}
-        form={form}
-        labelCol={3}
-      />
+      <BaseModal open={isOpen} handleCancel={handleCancel} handleOk={handleOk}>
+        <BaseForm form={form} data={TestForm} labelCol={3} ></BaseForm>
+      </BaseModal>
     </div>
   )
 }
