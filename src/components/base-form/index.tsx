@@ -47,7 +47,7 @@ export interface IProps {
   labelCol?: number // label的宽度 不是px 1~10
   maxWidth?: number // 表单最大宽度 px
   layout?: FormLayout // 布局
-  buttonLayout?: 'left' | 'center' // 底部按钮布局
+  childLayout?: 'left' | 'center' // 底部按钮布局
 }
 
 // memo浅层比较
@@ -61,7 +61,7 @@ const BaseForm: FC<IProps> = memo(function (props) {
     labelCol,
     maxWidth,
     layout,
-    buttonLayout,
+    childLayout,
     onFinish,
     children
   } = props
@@ -157,7 +157,7 @@ const BaseForm: FC<IProps> = memo(function (props) {
 
       {children && (
         <Form.Item
-          className={`flex ${buttonLayout == 'left' ? buttonLayout : 'justify-center'
+          className={`flex ${childLayout == 'left' ? childLayout : 'justify-center'
             }`}
         >
           {children}

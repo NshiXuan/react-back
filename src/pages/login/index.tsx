@@ -21,7 +21,7 @@ const Login = function () {
             data={loginForm}
             form={form}
             labelCol={4}
-            buttonLayout="center"
+            childLayout="center"
             onFinish={login}
           >
             {/* 需要有submit */}
@@ -36,7 +36,7 @@ const Login = function () {
         </div>
         <img className="w-[500px] object-cover" src={loginImg} alt="" />
       </div>
-    </div>
+    </div >
   )
 }
 
