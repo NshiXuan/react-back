@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Table, Tag } from 'antd'
+import { Button, Popconfirm, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { FormOutlined, DeleteOutlined } from '@ant-design/icons'
 
@@ -77,9 +77,11 @@ const UserList = function () {
             <Button type="primary" icon={<FormOutlined />} onClick={handleOpen}>
               编辑
             </Button>
-            <Button type="primary" icon={<DeleteOutlined />} danger>
-              删除
-            </Button>
+            <Popconfirm title="确认删除吗？" cancelText="取消" okText="确认" onConfirm={() => { }}>
+              <Button type="primary" icon={<DeleteOutlined />} danger>
+                删除
+              </Button>
+            </Popconfirm>
           </div>
         )
       }

@@ -3,7 +3,7 @@ import React from 'react'
 import useTable from '@/hooks/useTable'
 import { IRole } from '@/type'
 import { DeleteOutlined, FormOutlined } from '@ant-design/icons'
-import { Button, Table, Tag } from 'antd'
+import { Button, Popconfirm, Table, Tag } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { TestRoleList } from '@/data/role-data'
 
@@ -28,12 +28,10 @@ const Role = function () {
       render: (item: IRole) => {
         return (
           <div className="flex gap-3 ">
-            <Button type="primary" icon={<FormOutlined />}>
-              编辑
-            </Button>
-            <Button type="primary" icon={<DeleteOutlined />} danger>
-              删除
-            </Button>
+            <Button type="primary" icon={<FormOutlined />}>编辑</Button>
+            <Popconfirm title="确认删除吗？" cancelText="取消" okText="确认" onConfirm={() => { }}>
+              <Button type="primary" icon={<DeleteOutlined />} danger>删除</Button>
+            </Popconfirm>
           </div>
         )
       }
@@ -57,5 +55,4 @@ const Role = function () {
 
 export default Role
 
-// 设置一个方便调试的name 可以不写 默认为组件名称
-Role.displayName = 'Role'
+
