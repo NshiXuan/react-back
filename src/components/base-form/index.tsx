@@ -142,6 +142,9 @@ const BaseForm: FC<IProps> = memo(function (props) {
       onFinish={onFinish}
       layout={layout}
     >
+      <Form.Item hidden name="id" label="id">
+        <Input placeholder="请输入id" />
+      </Form.Item>
       {data?.map((item) => {
         return (
           <Form.Item
