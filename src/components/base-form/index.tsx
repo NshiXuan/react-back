@@ -20,6 +20,13 @@ export type IFormItemType =
   | 'datePicker'
   | 'rangePicker'
 
+export interface IOption {
+  value: string
+  label: string
+}
+
+export type IOptions = IOption[]
+
 export interface IFormItem {
   type: IFormItemType
   name: string
@@ -27,20 +34,18 @@ export interface IFormItem {
   placeholder?: string
   rules?: Rule[]
   hidden?: boolean // 是否隐藏input
-  options?: {
-    // 选择框、单选、多选需要
-    value: string
-    label: string
-  }[]
+  options?: IOptions  // 选择框、单选、多选需要
   allowClear?: boolean
   rows?: number // textarea的行数
   size?: SizeType // 输入框尺寸
   disabled?: boolean // 是否禁用
 }
 
+export type IFormItems = IFormItem[]
+
 export interface IProps {
   children?: ReactNode // submit类型的按钮
-  data?: IFormItem[] // 映射表单列表的信息
+  data?: IFormItems // 映射表单列表的信息
   form: FormInstance<any> // 表单
   initialValues?: any // 默认值
   onFinish?: (values: any) => void // 提交的回调函数
